@@ -16,7 +16,7 @@ export default async (req, res) => {
     return res.status(400).json(errorHelper(code, req, error.details[0].message));
   }
 
-  const user = await User.findOne({ email: req.body.email, isActivated: true, isVerified: true }).select('+password')
+  const user = await User.findOne({ email: req.body.email, isVerified: true }).select('+password')
     .catch((err) => {
       return res.status(500).json(errorHelper('00041', req, err.message));
     });
