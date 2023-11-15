@@ -9,7 +9,6 @@ const specDoc = swaggerJsdoc(swaggerConfig);
 
 router.use(specs, serve);
 router.get(specs, setup(specDoc, { explorer: true }));
-
 router.use('/user', user);
 
 export default router;
