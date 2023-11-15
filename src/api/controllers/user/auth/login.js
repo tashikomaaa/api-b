@@ -16,7 +16,11 @@ export default async (req, res) => {
     return res.status(400).json(errorHelper(code, req, error.details[0].message));
   }
 
-  const user = await User.findOne({ email: req.body.email }).select('+password')
+  const user = await User.findOne({
+    email: req.body.email,
+    // isActivated: true,
+    //  isVerified: true 
+  }).select('+password')
     .catch((err) => {
       return res.status(500).json(errorHelper('00041', req, err.message));
     });
@@ -24,11 +28,11 @@ export default async (req, res) => {
   if (!user)
     return res.status(404).json(errorHelper('00042', req));
 
-  if (!user.isActivated)
-    return res.status(400).json(errorHelper('00043', req));
+  // if (!user.isActivated)
+  //   return res.status(400).json(errorHelper('00043', req));
 
-  if (!user.isVerified)
-    return res.status(400).json(errorHelper('00044', req));
+  // if (!user.isVerified)
+  //   return res.status(400).json(errorHelper('00044', req));
 
   const match = await compare(req.body.password, user.password);
   if (!match)
