@@ -1,7 +1,7 @@
 import express from 'express';
 import { port } from './config/index.js';
 import loader from './loaders/index.js';
-
+import cors from "cors";
 const app = express();
 
 loader(app);
@@ -13,5 +13,6 @@ app.listen(port, err => {
   }
   console.log(`Server is running on ${port}`);
 });
+app.use(cors())
 
 export default app
